@@ -9,11 +9,11 @@ object RomanNumeral2 {
     RomanNumeral2(romanString(value))
   }
 
-  private def romanString(value: Int): String = greatestSegmentNotExceeding(value)
-    .map(segment => segment._1 + romanString(value - segment._2))
+  private def romanString(remainder: Int): String = greatestSegmentNotExceeding(remainder)
+    .map { case (symbol, value) => symbol + romanString(remainder - value) }
     .getOrElse("")
 
-  private def greatestSegmentNotExceeding(value: Int) = SEGMENTS.find(_._2 <= value)
+  private def greatestSegmentNotExceeding(max: Int) = SEGMENTS.find { case (symbol, value) => value <= max }
 }
 
 case class RomanNumeral2(numeralString: String)
